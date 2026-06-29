@@ -1,0 +1,17 @@
+# Example App — 프로젝트 미니 wiki (기계지도)
+
+> 모바일/웹 앱(예: Flutter/React Native) + 엣지 워커 백엔드(예: Cloudflare Workers/Vercel/Deno)·프로덕션 DB·오브젝트 스토리지. 이중트리(앱 SOT · 워커 SOT)를 단일 git DB로 공유하는 **from-scratch 자기완결 프로젝트**의 제네릭 worked 예시다(코어 에이전트 카드는 `agents/example-app.agent.md`).
+
+이 서브트리는 코어 에이전트가 example-app을 만질 때 JIT로 끌어쓰는 자기완결 미니 wiki의 예시다. 진실은 코드에 산다 — 여기 노트들은 그 코드를 미러(`source:`)하거나, 코드에 남길 수 없는 '왜'(설계 결정·교훈)를 담는다. 사전적재는 이 `llms.txt`만; 나머지는 frontmatter ripgrep으로 search→get. 모든 통계는 단일 정본 provider(single-source chokepoint)를 경유한다(표면패치=whack-a-mole). prod 쓰기는 명시인증(HITL) 게이트.
+
+## Reference (에이전트 검색면 — 간결·독립소비)
+- [reference/api-endpoints.md](reference/api-endpoints.md): 단일 대형 워커 파일의 `/v1/*` 엔드포인트 인벤토리(미러 예시)
+- [reference/data-schema.md](reference/data-schema.md): 프로덕션 DB 테이블 인벤토리 + drift-proof 재생성법
+
+## How-to (실행 runbook)
+- [howto/deploy.md](howto/deploy.md): 빌드큐 워처 + 엣지 워커 prod 배포(HITL 게이트)
+
+## Optional (사람용 서사·결정)
+- [explanation/single-sot-chokepoint.md](explanation/single-sot-chokepoint.md): 단일소스 chokepoint가 '왜' 근본인가
+- [decisions/ADR-0001-single-source-provider.md](decisions/ADR-0001-single-source-provider.md): 단일 정본 레코드 chokepoint 채택 결정
+- [INDEX.md](INDEX.md): 이 폴더 롤업(자동생성)
