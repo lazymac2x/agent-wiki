@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1280, initial-scale=1">
+<title>agent-wiki — social banner 1280×640</title>
+<style>
+  /* ---- exact GitHub social-card frame ---- */
+  html, body { margin: 0; padding: 0; width: 1280px; height: 640px; overflow: hidden; background: #06070b; }
+
+  /* ===== 3-tier-ish design tokens (inline, self-contained) ===== */
+  :root {
+    /* primitive */
+    --c-void:        #06070b;
+    --c-base-0:      #0a0b10;
+    --c-base-1:      #0d0f15;
+    --c-base-2:      #111318;
+    --c-ink:         #f4f7fb;   /* near-white */
+    --c-ink-2:       #d3dcea;   /* tagline EN */
+    --c-ink-3:       #98a5bb;   /* tagline KO / muted */
+    --c-chip-ink:    #c8d2e2;
+    --c-cyan:        #6fe9ff;   /* moderate-chroma cyan (no neon bloom) */
+    --c-cyan-soft:   #80e6f7;
+    --c-azure:       #5b8cff;   /* SOT accent */
+    --c-line:        rgba(140,190,255,0.16);
+    /* semantic */
+    --text-primary:  var(--c-ink);
+    --text-secondary:var(--c-ink-2);
+    --text-tertiary: var(--c-ink-3);
+    --accent:        var(--c-cyan);
+    --accent-deep:   var(--c-azure);
+    /* type */
+    --font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, "Cascadia Code", "Roboto Mono", monospace;
+    --font-sans: system-ui, -apple-system, "SF Pro Display", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  .card {
+    position: relative;
+    width: 1280px; height: 640px;
+    background:
+      radial-gradient(120% 140% at 86% 14%, rgba(91,140,255,0.10) 0%, rgba(91,140,255,0) 46%),
+      radial-gradient(90% 120% at 78% 88%, rgba(111,233,255,0.07) 0%, rgba(111,233,255,0) 50%),
+      linear-gradient(152deg, var(--c-base-0) 0%, var(--c-base-1) 52%, var(--c-base-2) 100%);
+    overflow: hidden;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), inset 0 0 0 1px rgba(255,255,255,0.02);
+  }
+
+  /* corner vignette for spatial depth */
+  .card::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(140% 120% at 50% 42%, rgba(0,0,0,0) 58%, rgba(0,0,0,0.42) 100%);
+  }
+
+  /* soft accent glow bloom (upper-right), kept off the text column */
+  .glow {
+    position: absolute; top: -160px; right: -120px;
+    width: 720px; height: 720px; pointer-events: none;
+    background: radial-gradient(circle at 50% 50%, rgba(91,140,255,0.28) 0%, rgba(111,233,255,0.10) 32%, rgba(0,0,0,0) 68%);
+    filter: blur(6px);
+  }
+
+  /* knowledge-graph + gear motif lives on the right, behind nothing readable */
+  .motif { position: absolute; inset: 0; pointer-events: none; }
+
+  /* ===== content column (left-aligned, vertically centered) ===== */
+  .content {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column; justify-content: center;
+    padding-left: 90px; padding-right: 470px;
+    box-sizing: border-box;
+  }
+
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-family: var(--font-sans);
+    font-size: 14px; font-weight: 600;
+    letter-spacing: 0.30em; text-transform: uppercase;
+    color: var(--c-cyan-soft);
+    margin-bottom: 26px;
+  }
+  .eyebrow .dot {
+    width: 9px; height: 9px; border-radius: 50%;
+    background: var(--c-cyan);
+    box-shadow: 0 0 12px 2px rgba(111,233,255,0.65);
+  }
+  .eyebrow .rule { width: 26px; height: 1px; background: linear-gradient(90deg, var(--c-azure), rgba(91,140,255,0)); }
+
+  .wordmark {
+    font-family: var(--font-mono);
+    font-size: 98px; line-height: 0.96; font-weight: 600;
+    letter-spacing: -0.012em; margin: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wordmark .a {
+    background: linear-gradient(180deg, #ffffff 0%, #d6e2f5 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .wordmark .w {
+    background: linear-gradient(180deg, #8af0ff 0%, #5b8cff 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    text-shadow: 0 0 40px rgba(91,140,255,0.22);
+  }
+
+  .tag-en {
+    font-family: var(--font-sans);
+    font-size: 28px; font-weight: 500; line-height: 1.18;
+    letter-spacing: -0.005em; color: var(--text-secondary);
+    margin: 28px 0 0 0; max-width: 660px;
+  }
+  .tag-ko {
+    font-family: var(--font-sans);
+    font-size: 18px; font-weight: 400; line-height: 1.3;
+    letter-spacing: -0.01em; color: var(--text-tertiary);
+    font-feature-settings: "palt" 1, "kern" 1;
+    margin: 12px 0 0 0;
+  }
+
+  .chips {
+    display: flex; flex-wrap: wrap; gap: 12px;
+    margin-top: 40px; max-width: 680px;
+  }
+  .chip {
+    display: inline-flex; align-items: center; gap: 9px;
+    height: 38px; padding: 0 16px;
+    border: 1px solid var(--c-line); border-radius: 999px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.015));
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+    font-family: var(--font-sans); font-size: 14.5px; font-weight: 500;
+    letter-spacing: 0.005em; color: var(--c-chip-ink);
+    white-space: nowrap;
+  }
+  .chip svg { display: block; flex: none; }
+  .chip .ic { color: var(--c-cyan); }
+  .chip .sep { color: rgba(200,210,226,0.42); margin: 0 1px; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="glow"></div>
+
+    <!-- subtle motif: knowledge-graph nodes/edges woven through a process gear -->
+    <svg class="motif" viewBox="0 0 1280 640" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <radialGradient id="nodeGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%"  stop-color="#aef2ff" stop-opacity="0.95"/>
+          <stop offset="55%" stop-color="#6fe9ff" stop-opacity="0.55"/>
+          <stop offset="100%" stop-color="#5b8cff" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="edge" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%"  stop-color="#6fe9ff" stop-opacity="0.55"/>
+          <stop offset="100%" stop-color="#5b8cff" stop-opacity="0.18"/>
+        </linearGradient>
+        <radialGradient id="gearHalo" cx="50%" cy="50%" r="50%">
+          <stop offset="0%"  stop-color="#5b8cff" stop-opacity="0.16"/>
+          <stop offset="70%" stop-color="#5b8cff" stop-opacity="0.03"/>
+          <stop offset="100%" stop-color="#5b8cff" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+
+      <!-- process gear silhouette (manufacturing) -->
+      <g transform="translate(1042 312)">
+        <circle r="220" fill="url(#gearHalo)"/>
+        <!-- cog teeth via dashed thick ring -->
+        <circle r="176" stroke="#6fe9ff" stroke-opacity="0.13" stroke-width="20"
+                stroke-dasharray="22 24" stroke-linecap="butt"/>
+        <circle r="176" stroke="#9fd4ff" stroke-opacity="0.10" stroke-width="1.2"/>
+        <circle r="132" stroke="#9fd4ff" stroke-opacity="0.16" stroke-width="1.2"
+                stroke-dasharray="2 12"/>
+        <circle r="74"  stroke="#9fd4ff" stroke-opacity="0.16" stroke-width="1.2"/>
+        <circle r="6"   fill="#6fe9ff" fill-opacity="0.5"/>
+      </g>
+
+      <!-- knowledge graph: edges (drawn first, under nodes) -->
+      <g stroke="url(#edge)" stroke-width="1.4">
+        <line x1="930"  y1="178" x2="1058" y2="150"/>
+        <line x1="1058" y1="150" x2="1168" y2="232"/>
+        <line x1="930"  y1="178" x2="1012" y2="300"/>
+        <line x1="1012" y1="300" x2="1058" y2="150"/>
+        <line x1="1012" y1="300" x2="1168" y2="232"/>
+        <line x1="1012" y1="300" x2="1110" y2="392"/>
+        <line x1="1012" y1="300" x2="912"  y2="356"/>
+        <line x1="1012" y1="300" x2="996"  y2="446"/>
+        <line x1="1110" y1="392" x2="1186" y2="446"/>
+        <line x1="1110" y1="392" x2="996"  y2="446"/>
+        <line x1="912"  y1="356" x2="996"  y2="446"/>
+        <line x1="1168" y1="232" x2="1110" y2="392"/>
+        <line x1="996"  y1="446" x2="1066" y2="498"/>
+        <line x1="912"  y1="356" x2="840"  y2="276" stroke-opacity="0.5"/>
+      </g>
+
+      <!-- faint outbound edges toward (but not into) the text column -->
+      <g stroke="#6fe9ff" stroke-width="1" stroke-opacity="0.14" stroke-dasharray="3 7">
+        <line x1="912" y1="356" x2="772" y2="408"/>
+        <line x1="930" y1="178" x2="800" y2="150"/>
+      </g>
+
+      <!-- nodes -->
+      <g>
+        <!-- glow halos for key nodes -->
+        <circle cx="1012" cy="300" r="26" fill="url(#nodeGlow)"/>
+        <circle cx="1058" cy="150" r="18" fill="url(#nodeGlow)"/>
+        <circle cx="1110" cy="392" r="18" fill="url(#nodeGlow)"/>
+        <circle cx="1168" cy="232" r="14" fill="url(#nodeGlow)"/>
+        <circle cx="996"  cy="446" r="14" fill="url(#nodeGlow)"/>
+
+        <!-- solid node cores -->
+        <circle cx="1012" cy="300" r="6.5" fill="#dffaff"/>
+        <circle cx="1058" cy="150" r="5"   fill="#bdefff"/>
+        <circle cx="1168" cy="232" r="4.5" fill="#bdefff"/>
+        <circle cx="1110" cy="392" r="5"   fill="#bdefff"/>
+        <circle cx="912"  cy="356" r="4"   fill="#a9d2ff"/>
+        <circle cx="930"  cy="178" r="4"   fill="#a9d2ff"/>
+        <circle cx="996"  cy="446" r="4.5" fill="#bdefff"/>
+        <circle cx="1186" cy="446" r="3.5" fill="#a9d2ff"/>
+        <circle cx="1066" cy="498" r="3.5" fill="#a9d2ff"/>
+        <circle cx="840"  cy="276" r="3"   fill="#9fd4ff" fill-opacity="0.8"/>
+        <circle cx="772"  cy="408" r="2.5" fill="#9fd4ff" fill-opacity="0.45"/>
+        <circle cx="800"  cy="150" r="2.5" fill="#9fd4ff" fill-opacity="0.45"/>
+      </g>
+    </svg>
+
+    <!-- content -->
+    <div class="content">
+      <div class="eyebrow">
+        <span class="dot"></span>
+        <span>Knowledge-Assetization OS</span>
+        <span class="rule"></span>
+      </div>
+
+      <h1 class="wordmark"><span class="a">agent</span><span class="w">-wiki</span></h1>
+
+      <p class="tag-en">A Knowledge-Assetization OS for AI agents</p>
+      <p class="tag-ko">AI 에이전트를 위한 지식 자산화 OS</p>
+
+      <div class="chips">
+        <span class="chip">
+          <svg class="ic" width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M13.2 5.4A5.5 5.5 0 1 0 13.7 9.7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+            <path d="M13.6 2.6V5.6H10.6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          PDCA <span class="sep">·</span> 90-pt gate
+        </span>
+
+        <span class="chip">
+          <svg class="ic" width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M1.5 8h3l1.6-4 2.8 8 1.6-4h3.4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          self-healing
+        </span>
+
+        <span class="chip">
+          <svg class="ic" width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M2 3.2h3.4L8 7.4l2.6-4.2H14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M8 7.4V13" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+            <circle cx="8" cy="13.4" r="1.5" stroke="currentColor" stroke-width="1.3"/>
+          </svg>
+          single-SOT chokepoint
+        </span>
+
+        <span class="chip">
+          <svg class="ic" width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <circle cx="5" cy="8" r="2.5" stroke="currentColor" stroke-width="1.3"/>
+            <path d="M5 3.2v1.4M5 11.4v1.4M9.3 8H7.5M2.5 8H.7M7.9 5.1l-1 1M3.1 9.9l-1 1M2.1 5.1l1 1M7.9 10.9l-1-1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+            <path d="M11 5l2.4 3L11 11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          manufacturing <span class="sep">↔</span> dev
+        </span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
