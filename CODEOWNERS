@@ -1,0 +1,23 @@
+# CODEOWNERS — 핫스팟 single-writer 소유권 맵 (git 충돌방지)
+# 병렬 에이전트가 아래 '핫스팟'은 동시에 손대지 않고 직렬로(한 번에 한 writer). 나머지는 additive-only.
+# 규칙 근거: .ops/git-conventions.md. (실제 PR 강제는 GitHub 사용 시, 로컬은 규율 + pre-commit 게이트.)
+
+# ── 핫스팟(직렬화 필수): 모든 노트가 참조하는 정본/네비/설정 ──
+/AGENTS.md            @owner   # 헌장 — 변경은 ADR 동반
+/CLAUDE.md            @owner
+/INDEX.md             @owner   # [GENERATED] 수기금지
+/llms.txt             @owner   # [GENERATED] 수기금지
+/CODEOWNERS           @owner
+/.gitignore           @owner
+/.claude/             @owner
+/.ops/sot-registry.md @owner   # 단일 SOT 레지스트리 — 충돌의 진원지, 한 writer
+/.ops/memory-bridge.md @owner
+/scripts/             @owner   # CI 도구 — 깨지면 전체 게이트 마비
+/templates/           @owner   # 계약 — 바뀌면 전 노트 영향
+
+# ── 생성물(절대 수기편집 금지) ──
+**/INDEX.md           @owner
+**/llms.txt           @owner
+
+# ── 일반 노트: additive-only, 폴더 단위로 자유롭게(서로 다른 파일이면 충돌 없음) ──
+# wiki/ harness/ projects/ prompts/ : 새 파일 추가는 충돌 0, 기존 파일 수정만 주의

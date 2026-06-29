@@ -1,0 +1,20 @@
+# agent-wiki .gitignore — worktree 독립 + 비밀 + 캐시 차단
+# 비밀(절대 커밋 금지) — 민감정보는 <your-secrets-sot> 가 owns, 여기엔 point만
+CLAUDE.local.md
+*.local.md
+.env
+.env.*
+secrets/
+*.key
+*.pem
+
+# worktree별 산물
+node_modules/
+.DS_Store
+*.bak
+*.tmp
+scratch/
+
+# 생성 캐시(필요 시) — INDEX.md/llms.txt 는 커밋한다(생성물이지만 navigation backbone·--verify 게이트 대상)
+.cache/
+*.log

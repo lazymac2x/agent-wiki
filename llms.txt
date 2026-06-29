@@ -1,0 +1,42 @@
+# agent-wiki
+
+> 지식 자산화 OS 템플릿 — 하네스 노하우·도메인 지식·개인 운영지식을 검증된 토큰효율 자산으로 굳히고 코어 에이전트가 그 위에서 일하는 lean·확장형 저장소.
+
+규칙 본체는 AGENTS.md 한 파일(헌장). 모든 폴더는 같은 모양 INDEX.md(자동생성)를 가진다. 본문은 JIT로 끌어다 씀다: 식별자만 적재하고 ripgrep으로 frontmatter 검색.
+
+## Charter
+- [AGENTS.md](AGENTS.md): 단일 정본 헌장(7대 법칙·frontmatter 계약·게이트)
+- [README.md](README.md): 사람용 6폴더 멘탈모델
+
+## Agents
+- [agents/example-app.agent.md](agents/example-app.agent.md): 제네릭 모바일/웹앱 코어 에이전트 — 단일 정본 레코드 provider·정본 user id 메쉬·어시스턴트형 RAG 툴콜링의 비즈로직 예시, wiki는 JIT
+- [agents/example-bot.agent.md](agents/example-bot.agent.md): 제네릭 자동매매/자동화 봇 코어 — 음의엣지 검증·서킷브레이커 우회불가·phantom sanitize·prod 주문 HITL의 안전 불변식 예시, OODA 런타임
+- [agents/example-edge.agent.md](agents/example-edge.agent.md): 제네릭 서버리스/엣지 워커 코어 — 배포게이트·DB ground-truth 검증·prod 쓰기 HITL·대용량 멀티파트의 운영 비즈로직 예시
+- [agents/example-line.agent.md](agents/example-line.agent.md): 제네릭 제조 라인 코어 — 라인/공정·제품·QC 스펙·takt·불량 taxonomy·에스컬레이션 비즈로직 예시, OPL/SOP를 JIT 조립
+- [agents/example-pipeline.agent.md](agents/example-pipeline.agent.md): 제네릭 데이터 파이프라인/수집 코어 — 수집 액터 인벤토리·SLA·incident 백로그의 비즈로직 예시, 상세는 외부 SOT 포인터(복붙 금지)
+- [agents/_panel/design.md](agents/_panel/design.md): 디자인 패널 — UI/로고/색/아이콘/폴리싱은 전용 디자인 에이전트 위임이 디폴트. 벡터(SVG) 우선·브랜드SOT ground·crude 자가처리(PIL 등) 금지
+- [agents/_panel/judge.md](agents/_panel/judge.md): 90점 7축 judge 패널 — CoT 먼저→[[rubric]] JSON 계약 1회. 결정론 유닛테스트를 비결정 judge의 신뢰 oracle(2nd rater)로 병행
+- [agents/_panel/verify.md](agents/_panel/verify.md): 적대 verify 패널 — 실행증거(테스트/로그/스크린샷/DB)를 요구하는 검증자. 정적분석만으론 PASS 불가, 생성과 다른 모델패밀리
+
+## Harness
+- [harness/workflows/evaluator-optimizer.md](harness/workflows/evaluator-optimizer.md): 생성(optimizer)/평가(judge) 역할분리 루프 — 종료=평균≥90 ∧ P0/P1=0 ∧ hard 반복상한6. Uncontrolled Recursion·self-preference 방지
+- [harness/workflows/feedback-loop.md](harness/workflows/feedback-loop.md): 무한피드백 loop-until-dry — 전수조사→문제→수정→실증(두눈/결정론/가짜0)→재발방지. 일반원칙 vs 과적합 교훈 분리
+- [harness/workflows/ooda-runtime.md](harness/workflows/ooda-runtime.md): 봇/배포 런타임 OODA(시간민감 빠른회전) + OODA↔PDCA 라우팅 트리거표(런타임이상=OODA/계획빌드=PDCA) + 서킷브레이커 우회금지
+- [harness/workflows/pdca.md](harness/workflows/pdca.md): Plan(전수조사)→Do(단일소스 구현)→Check(감사·90점 적대채점·다양시나리오 실증)→Act(재발방지·문서갱신·배포) 계획-품질 루프 · 심층-피드백 스킬 브리지
+- [harness/workflows/self-healing.md](harness/workflows/self-healing.md): 이상탐지→분류→graduated(조이기·늦추기·세우기)→검증(결정론·가짜0)→런타임 자율수복 · prod-write=HITL · 자가수복 루틴 브리지(Phase0~4)
+- [harness/patterns/anti-patterns.md](harness/patterns/anti-patterns.md): self-audit 체크리스트 — 7대 안티패턴 + Reflexion 3함정(퇴화·무한루프·틀린교훈 영구저장) + judge 편향 5종(위치·길이·자기편애·장황·표류)
+- [harness/patterns/guardrails.md](harness/patterns/guardrails.md): bounded exec(max-step·cost-cap·time-bound 구체수치)+input/tool-call/tool-response/output 4지점 가드·단일 chokepoint=poka-yoke
+- [harness/patterns/manufacturing-bridge.md](harness/patterns/manufacturing-bridge.md): 제조 품질공학 ↔ 하네스 동형매핑 정본 — andon·poka-yoke·jidoka·다층검사·provenance·defect P0/P1/P2·3현=두눈·FMEA·SPC·5S
+- [harness/patterns/pattern-select.md](harness/patterns/pattern-select.md): 패턴 결정트리(가장 단순한 해부터)·model-tiering(Opus 오케/Haiku 워커)·멀티에이전트 전 단일 baseline 먼저(대부분 불필요)
+- [harness/patterns/rubric.md](harness/patterns/rubric.md): 7축 루브릭(정보위계·3초이해·CTA·가독성·일관성·정직성·예외처리)+0/50/90 행동앵커(0~100)·CoT-선행→JSON 계약 단일SOT·결정론 유닛이 2nd rater
+- [harness/patterns/single-sot-chokepoint.md](harness/patterns/single-sot-chokepoint.md): 단일 정본 provider(single-source chokepoint)가 '왜' 근본인가 — 표면패치=whack-a-mole 차단의 1급 패턴(스파인)
+
+## Wiki
+- [wiki/INDEX.md](wiki/INDEX.md): domain(개발)·factory(제조)·personal(개인) 3트랙
+
+## Projects
+- [projects/example-app/llms.txt](projects/example-app/llms.txt) (preload 대상)
+
+## Optional
+- [.ops/INDEX.md](.ops/INDEX.md): 토큰예산·SOT 레지스트리·git·모델티어링(컨텍스트 빡빡하면 드롭)
+- [templates/INDEX.md](templates/INDEX.md) · [prompts/INDEX.md](prompts/INDEX.md) · [scripts/INDEX.md](scripts/INDEX.md)
