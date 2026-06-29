@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "_comment": "agent-wiki 강제 레이어. 정직: pre-commit(설치 시)는 문서품질 게이트(check-all)만 hard 강제한다. 아래 permissions.deny 는 우회가능한 defense-in-depth 넓지(hard guarantee 아님). git 경로한정/single-writer 의 신뢰 강제는 pre-commit staged-scope 검사가 담당.",
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "D=\"$CLAUDE_PROJECT_DIR\"; cat \"$D/llms.txt\" 2>/dev/null | head -50; if [ -d \"$D/.git\" ] && [ ! -x \"$D/.git/hooks/pre-commit\" ]; then echo '⚠️ pre-commit hook 미설치 — 강제 게이트 비활성. 실행: bash scripts/install-hooks.sh'; fi; echo '--- agent-wiki: INDEX/llms.txt 수기편집 금지(gen-index.sh). 변경 후 scripts/check-all.sh 필수. ---'"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '[agent-wiki] 노트 추가/수정 시: bash scripts/check-all.sh (gen-index --verify + wiki-lint) 통과해야 PROVEN·커밋 가능.'"
+          }
+        ]
+      }
+    ]
+  },
+  "permissions": {
+    "allow": [
+      "Bash(bash scripts/*.sh)",
+      "Bash(bash scripts/*.sh:*)",
+      "Read",
+      "Edit",
+      "Write"
+    ],
+    "deny": [
+      "Bash(git add -A:*)",
+      "Bash(git add --all:*)",
+      "Bash(git add .)",
+      "Bash(git commit --no-verify:*)",
+      "Bash(kill -9:*)",
+      "Bash(rm -rf:*.git*)"
+    ]
+  }
+}
