@@ -48,7 +48,7 @@ L1(단일 SOT): **한 사실 = 한 노트.** 같은 값이 두 곳에 있으면 
 | 데이터 파이프라인 방법론 | [[example-pipeline]] | 인벤토리 본체는 외부(B) |
 | 제조 라인 코어 | [[example-line]] | 라인/공정 비즈로직·OPL 발행·QC 에스컬레이션 |
 
-> 표가 곳 dedup 도구다: 새 노트의 description이 기존 행과 겹치면 dup-SOT — 둘 중 하나는 `[[link]]`로 접어야 한다.
+> 표가 곧 dedup 도구다: 새 노트의 description이 기존 행과 겹치면 dup-SOT — 둘 중 하나는 `[[link]]`로 접어야 한다.
 
 ## B. 외부 소유경계 (wiki는 point만 — 복붙·재기재 금지)
 민감정보/휘발성 사실은 agent-wiki가 **소유하지 않는다.** 경로만 가리키고, 값은 절대 복제하지 않는다(복제하는 순간 두 곳이 drift). 상세 화해 = [[memory-bridge]].
