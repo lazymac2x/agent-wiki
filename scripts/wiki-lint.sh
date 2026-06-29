@@ -2,7 +2,7 @@
 # desc: 단일 chokepoint 린터 — frontmatter/헤드라인≤150/깨진[[link]]/freshness/size/dup/preload존재/죽은경로/고아/헌장 (bash3.2 호환)
 set -uo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"; cd "$ROOT"
-# 글자수는 로케일 비의존(tr+wc -c, charlen 함수) — LC_CTYPE 강제 제거(UTF-8 은 macOS 전용 로케일명이a Linux/MSYS서 C 폴백→오작동)
+# 글자수는 로케일 비의존(tr+wc -c, charlen 함수) — LC_CTYPE 강제 제거(UTF-8 은 macOS 전용 로케일명이라 Linux/MSYS서 C 폴백→오작동)
 EXCLUDE='\./\.git|/node_modules|/archive|/scratch|\./\.claude|/_template|\./\.cache|\./docs'
 REQ_KEYS="name description type track status owner created updated source links"
 DEADPATHS=''   # 프로젝트별 알려진 죽은 경로(공백구분). 비우면 검사 안 함 — 회귀 발견 시 추가.

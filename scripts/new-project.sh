@@ -30,7 +30,7 @@ case "$MODE" in
     [[ -e "$TGT" ]] && { echo "❌ 이미 존재: $TGT"; exit 1; }
     [[ -f templates/core-agent.md ]] || { echo "❌ templates/core-agent.md 없음"; exit 1; }
     cp templates/core-agent.md "$TGT"; stamp "$TGT"
-    # 도메인 지식 포인터(dual-home 금지·이름 충돌 회피 — 코어=agents/<name>, 지식=wiki/domain/<name>)
+    # 도메인 지식 포인터(dual-home 금지·이름 충돌 회피 — 코어=agents/<name>, 지식=wiki/domain/<name>-notes)
     DOM="wiki/domain/${NAME}-notes.md"
     if [[ ! -e "$DOM" ]]; then
       printf '%s\n' "---" "name: ${NAME}-notes" "description: ${NAME} 공유 도메인 지식·함정(brain의 JIT 검색면) — TODO(owner)" \
