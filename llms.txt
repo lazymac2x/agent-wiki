@@ -2,7 +2,7 @@
 
 > 지식 자산화 OS 템플릿 — 하네스 노하우·도메인 지식·개인 운영지식을 검증된 토큰효율 자산으로 굳히고 코어 에이전트가 그 위에서 일하는 lean·확장형 저장소.
 
-규칙 본체는 AGENTS.md 한 파일(헌장). 모든 폴더는 같은 모양 INDEX.md(자동생성)를 가진다. 본문은 JIT로 끌어다 씀다: 식별자만 적재하고 ripgrep으로 frontmatter 검색.
+규칙 본체는 AGENTS.md 한 파일(헌장). 모든 폴더는 같은 모양 INDEX.md(자동생성)를 가진다. 본문은 JIT로 끌어다 쓴다: 식별자만 적재하고 ripgrep으로 frontmatter 검색.
 
 ## Charter
 - [AGENTS.md](AGENTS.md): 단일 정본 헌장(7대 법칙·frontmatter 계약·게이트)

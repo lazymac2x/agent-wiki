@@ -78,7 +78,7 @@
 ## 5. git · 자원 (요약 — 상세 [[git-conventions]] [[model-tiering]])
 - 단일 git DB · **경로한정 add**(`git add <경로>`) · 핫스팟은 `CODEOWNERS` single-writer · 나머지 additive-only.
 - 병렬 = worktree-per-agent + 에이전트스코프 브랜치. git작업 직렬화(`kill -15` + `git worktree remove`, `kill -9`/`rm -rf` 금지). rebase-before-merge 순차머지.
-- 모델 티어링: Opus=orchestrator, Haiku=worker/1차스크리닝, 다른패밀리=최종 judge. 동시성측 + 비용 원장 + $ 킬스위치.
+- 모델 티어링: Opus=orchestrator, Haiku=worker/1차스크리닝, 다른패밀리=최종 judge. 동시성캡 + 비용 원장 + $ 킬스위치.
 
 ## 6. 어디부터 (진입)
 - 사람: [[README]] → 6폴더 멘탈모델.
